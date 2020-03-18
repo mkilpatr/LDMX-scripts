@@ -1,5 +1,29 @@
 # LDMX-scripts
 
+# Setting up LDMX Framework
+These are bash commands so make sure you are using a bash shell.
+
+## Get Xerces
+```
+wget https://archive.apache.org/dist/xerces/c/3/sources/xerces-c-3.1.4.tar.gz
+tar -zxvf xerces-c-3.1.4.tar.gz
+cd xerces-c-3.1.4
+./configure -prefix=$PWD
+make install
+export XERCESDIR=$PWD
+```
+
+## Get Geant4
+First check if you already have Geant4. If not:
+```
+wget https://distfiles.macports.org/geant4/geant4.10.02.p02.tar.gz
+tar -zxvf geant4.10.02.p02.tar.gz
+cd geant4.10.02.p02
+mkdir build
+cd build
+
+```
+
 # Description of analysis workflow
 
 ## Creating flat analysis ROOT trees from LDMX recon files
