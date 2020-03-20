@@ -16,12 +16,19 @@ export XERCESDIR=$PWD
 ## Get Geant4
 First check if you already have Geant4. If not:
 ```
-wget https://distfiles.macports.org/geant4/geant4.10.02.p02.tar.gz
-tar -zxvf geant4.10.02.p02.tar.gz
-cd geant4.10.02.p02
+git clone https://github.com/LDMXAnalysis/geant4.git geant4.10.02.p03
+git checkout tags/LDMX.10.2.3_pn -b LDMX.10.2.3_pn
+```
+Need to compile the directory.
+
+```
+cd geant4.10.02.p03
 mkdir build
 cd build
-
+cmake -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=ON -DXERCESC_ROOT_DIR=$XercesC_DIR -DGEANT4_USE_OPENGL_X11=ON -DCMAKE_INSTALL_PREFIX=../../install ..
+make install
+cd ../../install
+export G4DIR=$PWD
 ```
 
 # Description of analysis workflow
