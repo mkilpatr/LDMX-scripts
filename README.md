@@ -5,9 +5,9 @@ These are bash commands so make sure you are using a bash shell.
 
 ## Get Xerces
 ```
-wget https://archive.apache.org/dist/xerces/c/3/sources/xerces-c-3.2.0.tar.gz
-tar -zxvf xerces-c-3.2.0.tar.gz
-cd xerces-c-3.2.0
+wget https://archive.apache.org/dist/xerces/c/3/sources/xerces-c-3.2.2.tar.gz
+tar -zxvf xerces-c-3.2.2.tar.gz
+cd xerces-c-3.2.2
 ./configure -prefix=$PWD
 make install
 export XERCESDIR=$PWD
