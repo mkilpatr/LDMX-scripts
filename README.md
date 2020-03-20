@@ -31,6 +31,14 @@ cd ../../install
 export G4DIR=$PWD
 ```
 
+## Get LDMX Software and compile
+```
+source ldmx-sw.sh
+mkdir build; cd build
+cmake -DCMAKE_INSTALL_PREFIX=$LDMX_INSTALL_PREFIX -DXercesC_DIR=$XERCESDIR -DPYTHON_EXECUTABLE=`which python` -DPYTHON_INCLUDE_DIR=${PYTHONHOME}/include/python2.7 -DPYTHON_LIBRARY=$PYTHONHOME/lib/libpython2.7.so "$@" ../
+make install -j4
+```
+
 # Description of analysis workflow
 
 ## Creating flat analysis ROOT trees from LDMX recon files
