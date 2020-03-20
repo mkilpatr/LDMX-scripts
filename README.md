@@ -1,16 +1,20 @@
 # LDMX-scripts
 
 # Setting up LDMX Framework
-These are bash commands so make sure you are using a bash shell.
+Need this setup script
+```
+source ldmx-sw.sh
+```
 
 ## Get Xerces
 ```
-wget https://archive.apache.org/dist/xerces/c/3/sources/xerces-c-3.2.2.tar.gz
-tar -zxvf xerces-c-3.2.2.tar.gz
-cd xerces-c-3.2.2
+wget https://archive.apache.org/dist/xerces/c/3/sources/xerces-c-3.1.4.tar.gz
+tar -zxvf xerces-c-3.1.4.tar.gz
+cd xerces-c-3.1.4
 ./configure -prefix=$PWD
 make install
 export XERCESDIR=$PWD
+setenv XERCESDIR $PWD
 ```
 
 ## Get Geant4
@@ -26,10 +30,21 @@ Need to compile the directory.
 cd geant4.10.02.p03
 mkdir build
 cd build
-cmake3 -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=ON -DXERCESC_ROOT_DIR=$XercesC_DIR -DGEANT4_USE_OPENGL_X11=ON -DCMAKE_INSTALL_PREFIX=../../install ..
+cmake -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=ON -DXERCESC_ROOT_DIR=$XERCESDIR -DGEANT4_USE_OPENGL_X11=ON -DCMAKE_INSTALL_PREFIX=../../install ..
 make install
 cd ../../install
 export G4DIR=$PWD
+```
+
+## Get ROOT
+```
+wget https://root.cern.ch/download/root_v6.06.08.source.tar.gz
+tar -zxvf root_v6.06.08.source.tar.gz
+mkdir root-6.06.08-build
+cd root-6.06.08-build
+cmake -Dgdml=ON ../root-6.06.08
+make 
+export ROOTDIR=$PWD
 ```
 
 ## Get LDMX Software and compile
