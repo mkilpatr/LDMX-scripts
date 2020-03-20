@@ -17,6 +17,7 @@ export XERCESDIR=$PWD
 First check if you already have Geant4. If not:
 ```
 git clone https://github.com/LDMXAnalysis/geant4.git geant4.10.02.p03
+cd geant4.10.02.p03
 git checkout tags/LDMX.10.2.3_pn -b LDMX.10.2.3_pn
 ```
 Need to compile the directory.
