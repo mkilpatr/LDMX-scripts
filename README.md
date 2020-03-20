@@ -5,9 +5,9 @@ These are bash commands so make sure you are using a bash shell.
 
 ## Get Xerces
 ```
-wget https://archive.apache.org/dist/xerces/c/3/sources/xerces-c-3.1.4.tar.gz
-tar -zxvf xerces-c-3.1.4.tar.gz
-cd xerces-c-3.1.4
+wget https://archive.apache.org/dist/xerces/c/3/sources/xerces-c-3.2.0.tar.gz
+tar -zxvf xerces-c-3.2.0.tar.gz
+cd xerces-c-3.2.0
 ./configure -prefix=$PWD
 make install
 export XERCESDIR=$PWD
@@ -26,7 +26,7 @@ Need to compile the directory.
 cd geant4.10.02.p03
 mkdir build
 cd build
-cmake -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=ON -DXERCESC_ROOT_DIR=$XercesC_DIR -DGEANT4_USE_OPENGL_X11=ON -DCMAKE_INSTALL_PREFIX=../../install ..
+cmake3 -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=ON -DXERCESC_ROOT_DIR=$XercesC_DIR -DGEANT4_USE_OPENGL_X11=ON -DCMAKE_INSTALL_PREFIX=../../install ..
 make install
 cd ../../install
 export G4DIR=$PWD
