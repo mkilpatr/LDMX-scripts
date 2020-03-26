@@ -1,10 +1,6 @@
 # LDMX-scripts
+Using the centos7 node is the most confirmed working node: centos7.slac.stanford.edu
 
-# Setting up LDMX Framework
-Need this setup script
-```
-source ldmx-sw.sh
-```
 
 ## Get Xerces
 ```
@@ -15,6 +11,12 @@ cd xerces-c-3.1.4
 make install
 export XERCESDIR=$PWD
 setenv XERCESDIR $PWD
+cd ../
+```
+
+# Setting up LDMX Framework
+```
+source ldmx-sw.sh
 ```
 
 ## Get Geant4
@@ -34,6 +36,7 @@ cmake -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=ON -DXERCESC_ROOT_DIR=$XERCESDI
 make install
 cd ../../install
 export G4DIR=$PWD
+cd ../
 ```
 
 ## Get ROOT
@@ -49,7 +52,6 @@ export ROOTDIR=$PWD
 
 ## Get LDMX Software and compile
 ```
-source ldmx-sw.sh
 mkdir build; cd build
 cmake -DCMAKE_INSTALL_PREFIX=$LDMX_INSTALL_PREFIX -DXercesC_DIR=$XERCESDIR -DPYTHON_EXECUTABLE=`which python` -DPYTHON_INCLUDE_DIR=${PYTHONHOME}/include/python2.7 -DPYTHON_LIBRARY=$PYTHONHOME/lib/libpython2.7.so "$@" ../
 make install -j4
