@@ -41,8 +41,10 @@ cd ../
 
 ## Get ROOT
 ```
-wget https://root.cern.ch/download/root_v6.06.08.source.tar.gz
-tar -zxvf root_v6.06.08.source.tar.gz
+#wget https://root.cern.ch/download/root_v6.06.08.source.tar.gz
+#tar -zxvf root_v6.06.08.source.tar.gz
+#wget https://root.cern/download/root_v6.20.02.Linux-centos7-x86_64-gcc4.8.tar.gz
+#tar -zxvf root_v6.20.02.Linux-centos7-x86_64-gcc4.8.tar.gz
 mkdir root-6.06.08-build
 cd root-6.06.08-build
 cmake -Dgdml=ON ../root-6.06.08
