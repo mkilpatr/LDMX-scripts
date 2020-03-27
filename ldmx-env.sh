@@ -11,7 +11,7 @@
 #   alias ldmxenv='source <path-to-this-file>/ldmx-env.sh'
 
 # This is the full path to the directory containing ldmx-sw
-LDMXBASE="/nfs/slac/g/ldmx/users/${USER}"
+LDMXBASE="/nfs/slac/g/ldmx/users/mkilpatr"
 
 ### Helpful Aliases and Bash Functions
 # cmake command required to be done before make to build ldmx-sw
