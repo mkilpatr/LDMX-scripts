@@ -2,6 +2,12 @@
 Using the centos7 node is the most confirmed working node: centos7.slac.stanford.edu.
 Should be using a bash shell.
 
+## Get pyroot
+```
+git clone git://github.com/rootpy/rootpy.git
+python rootpy/setup.py install --user
+```
+
 ## Get LDMX Scripts
 ```
 git clone git@github.com:mkilpatr/LDMX-scripts.git
