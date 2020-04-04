@@ -41,7 +41,7 @@ export LDMX_INSTALL_PREFIX="$LDMXBASE/ldmx-sw/install" #needed for cmake
 ldmxremake() {
         rm -rf $LDMX_INSTALL_PREFIX &&
         cd $LDMXBASE/ldmx-sw/build &&
-        rm -r * &&
+        rm -rf * &&
         ldmxcmake &&
         make install -j8 &&
         cd -

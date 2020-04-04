@@ -159,7 +159,7 @@ class EcalVetoEvent(TreeModel):
     stdLayerHit = FloatCol()
     deepestLayerHit = IntCol()
     discValue = FloatCol()
-    discValueFernand = FloatCol()
+    #discValueFernand = FloatCol()
     hcalMaxPE = FloatCol()
     recoilPx = FloatCol()
     recoilPy = FloatCol()
@@ -256,7 +256,7 @@ class bdtTreeMaker:
         # Setup to read the collections we care about
         self.evHeader = r.ldmx.EventHeader()
         self.ecalVetoRes = r.TClonesArray('ldmx::EcalVetoResult')
-        self.ecalVetoResFernand = r.TClonesArray('ldmx::EcalVetoResult')
+        #self.ecalVetoResFernand = r.TClonesArray('ldmx::EcalVetoResult')
         self.hcalVetoRes = r.TClonesArray('ldmx::HcalVetoResult')
         self.hcalhits = r.TClonesArray('ldmx::HcalHit') #added by Jack
         self.trigRes = r.TClonesArray('ldmx::TriggerResult')
@@ -268,7 +268,7 @@ class bdtTreeMaker:
 
         self.intree.SetBranchAddress('EventHeader',r.AddressOf(self.evHeader))
         self.intree.SetBranchAddress('EcalVeto_recon',r.AddressOf(self.ecalVetoRes))
-        self.intree.SetBranchAddress('EcalVetoFernand_recon',r.AddressOf(self.ecalVetoResFernand))
+        #self.intree.SetBranchAddress('EcalVetoFernand_recon',r.AddressOf(self.ecalVetoResFernand))
         self.intree.SetBranchAddress('HcalVeto_recon',r.AddressOf(self.hcalVetoRes))
         self.intree.SetBranchAddress('ecalDigis_recon',r.AddressOf(self.ecalhits)) 
         self.intree.SetBranchAddress('hcalDigis_recon',r.AddressOf(self.hcalhits)) 
@@ -334,7 +334,7 @@ class bdtTreeMaker:
 
         # Stored value of bdt discriminator
         self.tree.discValue = self.ecalVetoRes[0].getDisc()
-        self.tree.discValueFernand = self.ecalVetoResFernand[0].getDisc()
+        #self.tree.discValueFernand = self.ecalVetoResFernand[0].getDisc()
         #print self.event_count,self.evHeader.getEventNumber(),self.ecalVetoRes[0].getDisc(),self.trigRes[0].passed()
 
         # HCal MaxPE value, needed for HCAL veto

@@ -1,63 +1,42 @@
 # LDMX-scripts
-Using the centos7 node is the most confirmed working node: centos7.slac.stanford.edu
+Using the centos7 node is the most confirmed working node: centos7.slac.stanford.edu.
+Should be using a bash shell.
 
-
-## Get Xerces
+## Get pyroot
 ```
-wget https://archive.apache.org/dist/xerces/c/3/sources/xerces-c-3.1.4.tar.gz
-tar -zxvf xerces-c-3.1.4.tar.gz
-cd xerces-c-3.1.4
-./configure -prefix=$PWD
-make install
-export XERCESDIR=$PWD
-setenv XERCESDIR $PWD
+git clone git://github.com/rootpy/rootpy.git
+python rootpy/setup.py install --user
+```
+
+## Get LDMX Scripts
+```
+git clone git@github.com:mkilpatr/LDMX-scripts.git
+cd LDMX-scripts
+source ldmx-env.sh
 cd ../
-```
-
-# Setting up LDMX Framework
-```
-source ldmx-sw.sh
-```
-
-## Get Geant4
-First check if you already have Geant4. If not:
-```
-git clone https://github.com/LDMXAnalysis/geant4.git geant4.10.02.p03
-cd geant4.10.02.p03
-git checkout tags/LDMX.10.2.3_pn -b LDMX.10.2.3_pn
-```
-Need to compile the directory.
-
-```
-cd geant4.10.02.p03
-mkdir build
-cd build
-cmake -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=ON -DXERCESC_ROOT_DIR=$XERCESDIR -DGEANT4_USE_OPENGL_X11=ON -DCMAKE_INSTALL_PREFIX=../../install ..
-make install
-cd ../../install
-export G4DIR=$PWD
-cd ../
-```
-
-## Get ROOT
-```
-#wget https://root.cern.ch/download/root_v6.06.08.source.tar.gz
-#tar -zxvf root_v6.06.08.source.tar.gz
-#wget https://root.cern/download/root_v6.20.02.Linux-centos7-x86_64-gcc4.8.tar.gz
-#tar -zxvf root_v6.20.02.Linux-centos7-x86_64-gcc4.8.tar.gz
-mkdir root-6.06.08-build
-cd root-6.06.08-build
-cmake -Dgdml=ON ../root-6.06.08
-make 
-export ROOTDIR=$PWD
 ```
 
 ## Get LDMX Software and compile
 ```
+git clone git@github.com:normangraf/ldmx-sw.git
+cd ldmx-sw
 mkdir build; cd build
 cmake -DCMAKE_INSTALL_PREFIX=$LDMX_INSTALL_PREFIX -DXercesC_DIR=$XERCESDIR -DPYTHON_EXECUTABLE=`which python` -DPYTHON_INCLUDE_DIR=${PYTHONHOME}/include/python2.7 -DPYTHON_LIBRARY=$PYTHONHOME/lib/libpython2.7.so "$@" ../
 make install -j4
 ```
+
+## Example to run from login
+```
+ssh -Y <username>@rhel6-64.slac.stanford.edu
+scl enable devtoolset-6 bash
+source /nfs/slac/g/ldmx/software/setup_gcc6.3.1_rhel6.sh
+export ROOTDIR=$SOFTWARE_HOME/root-6.18.04/install_gcc6.3.1_rhel6
+source $ROOTDIR/bin/thisroot.sh
+
+cd {work dir}/LDMX-scripts/EcalVeto
+python bdtTreeMaker.py --interactive --swdir=/nfs/slac/g/ldmx/users/vdutta/ldmx-sw-1.7/ldmx-sw-install -i /nfs/slac/g/ldmx/data/mc/v9/4gev_1e_ecal_pn/4gev_1e_ecal_pn_08_1.56e13_gab/4pt0_gev_1e_ecal_pn_v5_20190507_d928187b_tskim_recon_hcal_skim.root -o $PWD/test
+```
+
 
 # Description of analysis workflow
 
@@ -101,3 +80,4 @@ If you have a large number of files to run over for the BDT evaluation (e.g., if
 
 ## Analysis on flat trees
 Coming soon!
+
