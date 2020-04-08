@@ -292,8 +292,8 @@ class bdtTreeMaker:
             self.intree.GetEntry(self.event_count)
             if self.event_count%1000 == 0:
                 print 'Processing event ',self.event_count
-            #if self.event_count>1000:
-            #    return
+            if self.event_count>1000:
+                return
             self.process()
 
     # Process an event

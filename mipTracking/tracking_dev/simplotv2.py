@@ -5,7 +5,7 @@ from mpl_toolkits.mplot3d import Axes3D
 sig_file='hits_Sig0_1000sig.txt'
 bkg_file='hits_Bkg0_bkg.txt'
 #adds = 'Boop0'
-filePath = "/nfs/slac/g/ldmx/users/pmasters/ldmx-sw/scripts/EcalVeto/NewVars/hitPlotting/"
+filePath = "/nfs/slac/g/ldmx/users/mkilpatr/ldmx-sw/scripts/EcalVeto/NewVars/hitPlotting/"
 #fileName = "hits_" + str(adds) + "_1000sig.txt"
 fileArr = np.loadtxt(bkg_file)
 

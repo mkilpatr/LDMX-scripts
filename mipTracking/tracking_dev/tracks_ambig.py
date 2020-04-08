@@ -514,7 +514,7 @@ def analyze(inArr, min_len):  #inArr=array of all hits for all events; min_len=m
 #BEGIN ACTUAL PROGRAM
 
 min_track_len=3
-filePath = '/nfs/slac/g/ldmx/users/pmasters/ldmx-sw/LDMX-scripts/mipTracking/tracking_dev/'
+filePath = '/nfs/slac/g/ldmx/users/mkilpatr/ldmx-sw/LDMX-scripts/mipTracking/tracking_dev/'
 bkg_file='hits_sim_bkg_1.txt'
 sig_file='hits_sim_1000MeV_0.txt' #AND RECON  #'hits_Sig0_1000sig.txt'
 bkgArr = np.loadtxt(filePath+bkg_file)
