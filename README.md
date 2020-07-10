@@ -1,42 +1,54 @@
-# LDMX-scripts
+# POD Setup
+Need to load the singularity container
+```
+module load singularity
+```
+
+## Compile ldmx-sw
+```
+git clone --recursive https://github.com/LDMX-Software/ldmx-sw.git
+source ldmx-sw/scripts/ldmx-env.sh #this checks if you have docker/singularity installed and sources all libraries
+cd ldmx-sw; mkdir build; cd build;
+ldmx cmake ..
+ldmx make install -j2
+```
+
+You need to add the following lines to a setup script, such as .bash_profile
+```
+export LDMX_INSTALL_PREFIX=<Path to ldmx-sw>/ldmx-sw/install 
+source <Path to root>/bin/thisroot.sh #need to change this line
+source <Path to geant4>/bin/geant4.sh #need to change this line
+export LD_LIBRARY_PATH=$LDMX_INSTALL_PREFIX/lib:$LD_LIBRARY_PATH
+export PATH=$LDMX_INSTALL_PREFIX/bin:$PATH
+export PYTHONPATH=$LDMX_INSTALL_PREFIX/lib/python:$PYTHONPATH
+```
+
+## Compile ldmx-analysis
+```
+git clone git@github.com:LDMX-Software/ldmx-analysis.git
+cd ldmx-analysis; mkdir build; cd build
+ldmx cmake ..
+ldmx make install
+```
+
+You need to add this line also to your setup scrips.
+```
+export PYTHONPATH=<Path to ldmx-analysis>/ldmx-analysis/lib/python:$PYTHONPATH
+```
+
+Now you should have everything compiled!!
+
+# LDMX-scripts v12
 Using the centos7 node is the most confirmed working node: centos7.slac.stanford.edu.
 Should be using a bash shell.
 
-## Get pyroot
-```
-git clone git://github.com/rootpy/rootpy.git
-python rootpy/setup.py install --user
-```
-
 ## Get LDMX Scripts
 ```
-git clone git@github.com:mkilpatr/LDMX-scripts.git
-cd LDMX-scripts
-source ldmx-env.sh
-cd ../
+git clone git@github.com:IncandelaLab/LDMX-scripts.git
+cd EcalVeto-2.0
 ```
 
-## Get LDMX Software and compile
-```
-git clone git@github.com:normangraf/ldmx-sw.git
-cd ldmx-sw
-mkdir build; cd build
-cmake -DCMAKE_INSTALL_PREFIX=$LDMX_INSTALL_PREFIX -DXercesC_DIR=$XERCESDIR -DPYTHON_EXECUTABLE=`which python` -DPYTHON_INCLUDE_DIR=${PYTHONHOME}/include/python2.7 -DPYTHON_LIBRARY=$PYTHONHOME/lib/libpython2.7.so "$@" ../
-make install -j4
-```
-
-## Example to run from login
-```
-ssh -Y <username>@rhel6-64.slac.stanford.edu
-scl enable devtoolset-6 bash
-source /nfs/slac/g/ldmx/software/setup_gcc6.3.1_rhel6.sh
-export ROOTDIR=$SOFTWARE_HOME/root-6.18.04/install_gcc6.3.1_rhel6
-source $ROOTDIR/bin/thisroot.sh
-
-cd {work dir}/LDMX-scripts/EcalVeto
-python bdtTreeMaker.py --interactive --swdir=/nfs/slac/g/ldmx/users/vdutta/ldmx-sw-1.7/ldmx-sw-install -i /nfs/slac/g/ldmx/data/mc/v9/4gev_1e_ecal_pn/4gev_1e_ecal_pn_08_1.56e13_gab/4pt0_gev_1e_ecal_pn_v5_20190507_d928187b_tskim_recon_hcal_skim.root -o $PWD/test
-```
-
+You will need to make minor changes to the ```run_ldmx_app.py``` script and there is a new format for the config file. Examples of these are in my repository: https://github.com/mkilpatr/LDMX-scripts/tree/master/EcalVeto-2.0
 
 # Description of analysis workflow
 
