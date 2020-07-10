@@ -17,7 +17,7 @@ import csv
 #WARNING WARNING WARNING:  Make sure this is actually being run on the sim input files!
 
 adds = "sim_1000MeV_TMP"
-savePath = "/nfs/slac/g/ldmx/users/pmasters/ldmx-sw/LDMX-scripts/mipTracking/hits/"
+savePath = "/nfs/slac/g/ldmx/users/mkilpatr/ldmx-sw/LDMX-scripts/mipTracking/hits/"
 
 # Will go in utils
 cellMap = np.loadtxt('cellmodule.txt')
@@ -921,7 +921,7 @@ class bdtTreeMaker:
 # Process command line arguments and run the tree maker
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Make tree with BDT inputs and result')
-    parser.add_argument('--swdir', dest='swdir',  default='/nfs/slac/g/ldmx/users/pmasters/ldmx-sw/ldmx-sw-install', help='ldmx-sw build directory')
+    parser.add_argument('--swdir', dest='swdir',  default='/nfs/slac/g/ldmx/users/mkilpatr/ldmx-sw/ldmx-sw-install', help='ldmx-sw build directory')
     #parser.add_argument('--swdir', dest='swdir',  default='/nfs/slac/g/ldmx/users/vdutta/ldmx-sw/install', help='ldmx-sw build directory')
     parser.add_argument('--signal', dest='issignal', action='store_true', help='Signal file [Default: False]')
     parser.add_argument('--interactive', dest='interactive', action='store_true', help='Run in interactive mode [Default: False]')
