@@ -130,7 +130,7 @@ def main():
             default='',
             help='Path to save event output to.')
     parser.add_argument('--histOut', 
-            default='$PWD/test',
+            default='/nfs/slac/g/ldmx/users/$USER/LDMX-scripts/EcalVeto-2.0/test',
             help='Path to save histogram/tree output to.')
     parser.add_argument('config', 
             type=str,
