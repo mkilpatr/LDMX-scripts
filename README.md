@@ -17,7 +17,7 @@ ldmx make install -j2
 ## Compile ldmx-analysis
 ```
 cd <work dir>
-git clone git@github.com:LDMX-Software/ldmx-analysis.git
+git clone https://github.com/LDMX-Software/ldmx-analysis.git
 cd ldmx-analysis; mkdir build; cd build
 ldmx cmake ..
 ldmx make install
