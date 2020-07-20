@@ -32,4 +32,4 @@ p.inputFiles=["$inputEventFile"]
 p.histogramFile="$histogramFile"
 
 # Print out the details of the configured analyzers. 
-print p
+#print p
