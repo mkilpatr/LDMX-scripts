@@ -38,11 +38,9 @@ pip install numpy pandas scikit-learn scipy matplotlib tqdm
 # we use uproot to access ROOT files
 pip install uproot
 
-# install pytorch
-# pip install torch torchvision
-#! install pytorch nightly version for now -- the current stable version (1.4.0) has a bug
-pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cu101/torch_nightly.html
-
+# install pytorch, follow instructions for your OS/CUDA version at:
+# https://pytorch.org/get-started
+# pip install torch
 ```
 
 
