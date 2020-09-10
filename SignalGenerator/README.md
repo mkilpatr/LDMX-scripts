@@ -1,8 +1,4 @@
-# POD Setup
-Need to load the singularity container
-```
-module load singularity
-```
+# Signal Setup
 
 ##Unpack files
 ```
