@@ -7,11 +7,14 @@ module load singularity
 ## Compile ldmx-sw
 ```
 cd <work dir>
-git clone -b v2.1.0 https://github.com/LDMX-Software/ldmx-sw.git
-source ldmx-sw/scripts/ldmx-env.sh #this checks if you have docker/singularity installed and sources all libraries
-cd ldmx-sw; mkdir build; cd build;
+git clone -b v2.2.1 https://github.com/LDMX-Software/ldmx-sw.git
+cd ldmx-sw
+git submodule update --init --recursive
+source scripts/ldmx-env.sh #this checks if you have docker/singularity installed and sources all libraries
+ldmx-container-pull dev latest
+mkdir build; cd build;
 ldmx cmake ..
-ldmx make install -j2
+ldmx make install
 ```
 
 ## Compile ldmx-analysis
