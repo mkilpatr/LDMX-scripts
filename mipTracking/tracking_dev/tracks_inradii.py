@@ -14,7 +14,7 @@ visualize = True  #Plot each individual event?
 
 min_track_len = 5  #Minimum length required for valid tracks
 min_straight_len = 4  #Minimum length required for valid straight tracks
-filePath = '/nfs/slac/g/ldmx/users/pmasters/ldmx-sw/LDMX-scripts/mipTracking/tracking_dev/'
+filePath = '/nfs/slac/g/ldmx/users/mkilpatr/ldmx-sw/LDMX-scripts/mipTracking/tracking_dev/'
 showHists = True  #Create histos after full analysis
 saveHists = False  #Save histos instead of plotting them, mutually incompatible with show
 
@@ -572,7 +572,7 @@ def analyze(inArr, min_len, parent_file, momentum_file):  #inArr=array of all hi
 
 """min_track_len = 5
 min_straight_len = 4
-filePath = '/nfs/slac/g/ldmx/users/pmasters/ldmx-sw/LDMX-scripts/mipTracking/tracking_dev/'
+filePath = '/nfs/slac/g/ldmx/users/mkilpatr/ldmx-sw/LDMX-scripts/mipTracking/tracking_dev/'
 bkg_file = 'hits_sim_bkg_1k.txt'  #NOTE:  Used to be 0, 1...now using new files.
 sig_file = 'hits_sim_1000MeV_1k.txt' #AND RECON  #'hits_Sig0_1000sig.txt'
 bkg_parent_file = 'particleinfo_sim_bkg_1k.txt'  #NOTE:  Not the "parents" file!

@@ -121,16 +121,16 @@ def main():
             dest='test',
             help='Don\'t run fire.')
     parser.add_argument('--prefix', 
-            default='',
+            default='bkg',
             help='Output prefix to name output files.')
     parser.add_argument('--inputFile', 
-            default='',
+            default='/nfs/slac/g/ldmx/data/mc/v12/ecal_pn/4gev_1e_ecal_pn_v12_ldmx-det-v12_run584_seeds_71168_71169.root',
             help='Input file to process.')
     parser.add_argument('--eventOut', 
             default='',
             help='Path to save event output to.')
     parser.add_argument('--histOut', 
-            default='',
+            default='/nfs/slac/g/ldmx/users/$USER/LDMX-scripts/EcalVeto-2.0/test',
             help='Path to save histogram/tree output to.')
     parser.add_argument('config', 
             type=str,
