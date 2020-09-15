@@ -2,7 +2,7 @@
 Need to load the singularity container
 ```
 module load singularity
-module load cmake3
+module load cmake-3
 ```
 
 ## Compile ldmx-sw
