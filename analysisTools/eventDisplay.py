@@ -2,7 +2,7 @@ import ROOT as r
 import ROOTmanager as manager # Suggested standard import
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-r.gSystem.Load('<your-path-to>/ldmx-sw/install/lib/libEvent.so')
+r.gSystem.Load('/nfs/slac/g/ldmx/users/mkilpatr/ldmx-sw/install/lib/libEvent.so')
 
 # NOTE: Not currently working (For me, (Juan))
 # Option 1: It looks like we have to add some packages to the ldmx-sw container

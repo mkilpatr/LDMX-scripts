@@ -21,7 +21,7 @@ ldmx make install
 ## Compile ldmx-analysis
 ```
 cd <work dir>
-git clone https://github.com/LDMX-Software/ldmx-analysis.git
+git clone -v ecalana-v2.2-dev https://github.com/LDMX-Software/ldmx-analysis.git
 cd ldmx-analysis; mkdir build; cd build
 ldmx cmake ..
 ldmx make install
