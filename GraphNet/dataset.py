@@ -25,51 +25,40 @@ def _concat(arrays, axis=0):
 def _pad(a, pad_value=0):
     return a.pad(MAX_NUM_ECAL_HITS, clip=True).fillna(0).regular()
 
+## Higgs to tautau baseline cut ###
+#"Pass_NJets30 && SVFitMET_isValid && HiggsSVFit_PassBaseline && HiggsSVFit_PassLepton";
+###" && Pass_EventFilter && Pass_JetID 
+###"(HiggsSVFit_channel == 5 && HiggsSVFit_DZeta > -35 && HiggsSVFit_elecMuonMT < 60)";
+###"(HiggsSVFit_channel == 0 && HiggsSVFit_PassTight && HiggsSVFit_tau1_muMT < 50) || (HiggsSVFit_channel == 1 && HiggsSVFit_PassTight && HiggsSVFit_tau1_elecMT < 50)";
+###"(HiggsSVFit_channel == 2 && HiggsSVFit_PassTight && HiggsSVFit_ditauDR > 0.5 && HiggsSVFit_ditauPt > 50)";
+###
 
 class ECalHitsDataset(Dataset):
 
     def __init__(self, siglist, bkglist, load_range=(0, 1), apply_preselection=True, ignore_evt_limits=False, obs_branches=[], coord_ref=None, detector_version='v9'):
         super(ECalHitsDataset, self).__init__()
-        # first load cell map
-        self._load_cellMap(version=detector_version)
-        self._id_branch = 'EcalRecHits_sim.id_'
-        self._energy_branch = 'EcalRecHits_sim.energy_'
-        if detector_version == 'v9':
-            self._id_branch = 'ecalDigis_recon.id_'
-            self._energy_branch = 'ecalDigis_recon.energy_'
-        self._branches = [self._id_branch, self._energy_branch]
+        # first load baseline cut
+        self._passNJets_branch = 'Pass_NJets30'
+        self._passIsValid_branch = 'SVFitMET_isValid'
+        self._passBaseline_branch = 'HiggsSVFit_PassBaseline'
+        self._passLepton_branch = 'HiggsSVFit_PassLepton'
+        self._passEventFilter_branch = 'Pass_EventFilter'
+        self._passJetID_branch = 'Pass_JetID'
+        self._isChannel_branch = 'HiggsSVFit_channel'
+        self._DZeta_branch = 'HiggsSVFit_DZeta'
+        self._elecMuonMT_branch = 'HiggsSVFit_elecMuonMT'
+        self._passTight_branch = 'HiggsSVFit_PassTight'
+        self._passMuMT_branch = 'HiggsSVFit_tau1_muMT'
+        self._passElecMT_branch = 'HiggsSVFit_tau1_elecMT'
+        self._ditauDR_branch = 'HiggsSVFit_ditauDR'
+        self._ditauPt_branch = 'HiggsSVFit_ditauPt'
+
+        self._branches = [self._passNJets_branch, self._passIsValid_branch, self._passBaseline_branch, self._passLepton_branch, self._passEventFilter_branch, self._passJetID_branch, self._isChannel_branch, self._DZeta_branch, self._elecMuonMT_branch, self._passTight_branch, self._passMuMT_branch, self._passElecMT_branch, self._ditauDR_branch, self._ditauPt_branch]
 
         self.extra_labels = []
         self.presel_eff = {}
         self.var_data = {}
         self.obs_data = {k:[] for k in obs_branches}
-
-        print('Using coord_ref=%s' % coord_ref)
-        def _load_coord_ref(t, table):
-            if coord_ref is None or (coord_ref == 'none' or coord_ref == 'ecal_centroid'):
-                table['x_ref'] = np.zeros(t.numentries, dtype='float32')
-                table['y_ref'] = np.zeros(t.numentries, dtype='float32')
-            elif coord_ref == 'ecal_sp':
-                el = (t['EcalScoringPlaneHits_sim.pdgID_'].array() == 11) * \
-                     (t['EcalScoringPlaneHits_sim.layerID_'].array() == 1) * \
-                     (t['EcalScoringPlaneHits_sim.pz_'].array() > 0)
-                table['x_ref'] = t['EcalScoringPlaneHits_sim.x_'].array()[el].pad(1, clip=True).fillna(0).flatten()
-                table['y_ref'] = t['EcalScoringPlaneHits_sim.y_'].array()[el].pad(1, clip=True).fillna(0).flatten()
-            elif coord_ref == 'target_sp':
-                el = (t['TargetScoringPlaneHits_sim.pdgID_'].array() == 11) * \
-                     (t['TargetScoringPlaneHits_sim.layerID_'].array() == 2) * \
-                     (t['TargetScoringPlaneHits_sim.pz_'].array() > 0)
-                table['x_ref'] = t['TargetScoringPlaneHits_sim.x_'].array()[el].pad(1, clip=True).fillna(0).flatten()
-                table['y_ref'] = t['TargetScoringPlaneHits_sim.y_'].array()[el].pad(1, clip=True).fillna(0).flatten()
-            else:
-                raise RuntimeError('Invalid coord_ref: %s' % coord_ref)
-
-        def _load_recoil_pt(t, table):
-            if len(obs_branches):
-                el = (t['TargetScoringPlaneHits_sim.pdgID_'].array() == 11) * \
-                     (t['TargetScoringPlaneHits_sim.layerID_'].array() == 2) * \
-                     (t['TargetScoringPlaneHits_sim.pz_'].array() > 0)
-                table['TargetSPRecoilE_pt'] = np.sqrt(t['TargetScoringPlaneHits_sim.px_'].array()[el] ** 2 + t['TargetScoringPlaneHits_sim.py_'].array()[el] ** 2).pad(1, clip=True).fillna(-999).flatten()
 
         def _read_file(table):
             # load data from one file
@@ -79,7 +68,11 @@ class ECalHitsDataset(Dataset):
             n_inclusive = len(table[self._branches[0]])  # before preselection
 
             if apply_preselection:
-                pos_pass_presel = (table[self._energy_branch] > 0).sum() < MAX_NUM_ECAL_HITS
+                pass_basesel = table[self._passNJets_branch] * table[self._passIsValid_branch] * table[self._passBaseline_branch] * table[self._passLepton_branch] * table[self._passEventFilter_branch] * table[self._passJetID_branch]
+                pass_emusel  = (table[self._isChannel_branch] == 5) * (table[self._DZeta_branch] > -35) * (table[self._elecMuonMT_branch] < 60)
+                pass_lephadsel = ((table[HiggsSVFit_channel] == 0) * table[self._passTight_branch] * (table[self._passMuMT_branch] < 50)) + ((table[HiggsSVFit_channel] == 1) * table[self._passTight_branch] * (table[self._passElecMT_branch] < 50))
+                pass_hadhadsel = (table[HiggsSVFit_channel] == 2) * table[self._passTight_branch] * (table[self._ditauDR_branch] > 0.5) * (table[self._ditauPt_branch] > 50)
+                pos_pass_presel = pass_basesel * (pass_emusel + pass_lephadsel + pass_hadhadsel)
                 for k in table:
                     table[k] = table[k][pos_pass_presel]
             n_selected = len(table[self._branches[0]])  # after preselection
@@ -94,17 +87,7 @@ class ECalHitsDataset(Dataset):
             eid = eid[pos]
             energy = energy[pos]
 
-            (x, y, z), layer_id = self._parse_cid(eid)
-            if coord_ref == 'ecal_centroid':
-                e_sum = np.maximum(energy.sum(), 1e-6)
-                table['x_ref'] = (x * energy).sum() / e_sum
-                table['y_ref'] = (y * energy).sum() / e_sum
-            x = x - table['x_ref']
-            y = y - table['y_ref']
-
-            var_dict = {self._id_branch:eid, self._energy_branch:energy,
-                        'x':x, 'y':y, 'z':z, 'layer_id':layer_id,
-                        'x_ref':table['x_ref'], 'y_ref':table['y_ref']}
+            var_dict = {}
             obs_dict = {k: table[k] for k in obs_branches}
 
             return (n_inclusive, n_selected), var_dict, obs_dict
@@ -127,14 +110,12 @@ class ECalHitsDataset(Dataset):
 
                 with tqdm.tqdm(glob.glob(filepath)) as tq:
                     for fp in tq:
-                        t = uproot.open(fp)['LDMX_Events']
+                        t = uproot.open(fp)['Events']
                         if len(t.keys()) == 0:
 #                             print('... ignoring empty file %s' % fp)
                             continue
                         load_branches = [k for k in self._branches + obs_branches if '.' in k and k[-1] == '_']
                         table = t.arrays(load_branches, namedecode='utf-8', executor=executor)
-                        _load_coord_ref(t, table)
-                        _load_recoil_pt(t, table)
                         (n_inc, n_sel), v_d, o_d = _read_file(table)
                         n_total_inclusive += n_inc
                         n_total_selected += n_sel
@@ -198,25 +179,6 @@ class ECalHitsDataset(Dataset):
 
         assert(len(self.coordinates) == len(self.label))
         assert(len(self.features) == len(self.label))
-
-    def _load_cellMap(self, version='v9'):
-        self._cellMap = {}
-        for i, x, y in np.loadtxt('data/%s/cellmodule.txt' % version):
-            self._cellMap[i] = (x, y)
-        self._layerZs = np.loadtxt('data/%s/layer.txt' % version)
-
-    def _parse_cid(self, cid):
-        cell = (cid.content & 0xFFFF8000) >> 15
-        module = (cid.content & 0x7000) >> 12
-        layer = (cid.content & 0xFF0) >> 4
-        mcid = 10 * cell + module
-        x, y = zip(*map(self._cellMap.__getitem__, mcid))
-        z = list(map(self._layerZs.__getitem__, layer))
-        x = cid.copy(content=np.array(x, dtype='float32'))
-        y = cid.copy(content=np.array(y, dtype='float32'))
-        z = cid.copy(content=np.array(z, dtype='float32'))
-        layer_id = cid.copy(content=np.array(layer, dtype='float32'))
-        return (x, y, z), layer_id
 
     @property
     def num_features(self):

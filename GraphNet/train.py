@@ -60,29 +60,27 @@ args = parser.parse_args()
 ###### location of the signal and background files ######
 bkglist = {
     # (filepath, num_events_for_training)
-    0: ('/data/hqu/ldmx/mc/v9/4gev_1e_ecal_pn_02_1.48e13_gab/*.root', -1)
+    0: ('/data/mkilpatr/ParticleNet-DiHiggs/samples/bkg/*.root', -1)
     }
 
 siglist = {
     # (filepath, num_events_for_training)
-    1: ('/data/hqu/ldmx/mc/v9/signal_hs/*mA.0.001*.root', 200000),
-    10: ('/data/hqu/ldmx/mc/v9/signal_hs/*mA.0.01*.root', 200000),
-    100: ('/data/hqu/ldmx/mc/v9/signal_hs/*mA.0.1*.root', 200000),
-    1000: ('/data/hqu/ldmx/mc/v9/signal_hs/*mA.1.0*.root', 200000),
+    1: ('/data/mkilpatr/ParticleNet-DiHiggs/samples/sig/ggHHto2b2tau_tree.root', 200000),
+    10: ('/data/mkilpatr/ParticleNet-DiHiggs/samples/sig/ggHto2tau_tree.root', 200000),
+    100: ('/data/mkilpatr/ParticleNet-DiHiggs/samples/sig/vbfHto2tau_tree.root', 200000),
     }
 
 if args.demo:
     bkglist = {
         # (filepath, num_events_for_training)
-        0: ('/data/hqu/ldmx/mc/v9/4gev_1e_ecal_pn_02_1.48e13_gab/*.root', 4000)
+        0: ('/data/mkilpatr/ParticleNet-DiHiggs/samples/bkg/*.root', 4000)
         }
 
     siglist = {
         # (filepath, num_events_for_training)
-        1: ('/data/hqu/ldmx/mc/v9/signal_hs/*mA.0.001*.root', 1000),
-        10: ('/data/hqu/ldmx/mc/v9/signal_hs/*mA.0.01*.root', 1000),
-        100: ('/data/hqu/ldmx/mc/v9/signal_hs/*mA.0.1*.root', 1000),
-        1000: ('/data/hqu/ldmx/mc/v9/signal_hs/*mA.1.0*.root', 1000),
+        1: ('/data/mkilpatr/ParticleNet-DiHiggs/samples/sig/ggHHto2b2tau_tree.root', 1000),
+        10: ('/data/mkilpatr/ParticleNet-DiHiggs/samples/sig/ggHto2tau_tree.root', 1000),
+        100: ('/data/mkilpatr/ParticleNet-DiHiggs/samples/sig/vbfHto2tau_tree.root', 1000),
         }
 #########################################################
 
@@ -93,32 +91,86 @@ if args.save_extra:
 #        'ecalDigis_recon.id_',
 #        'ecalDigis_recon.energy_',
 
-        'EcalVetoGabriel_recon.nReadoutHits_',
-        'EcalVetoGabriel_recon.deepestLayerHit_',
-        'EcalVetoGabriel_recon.summedDet_',
-        'EcalVetoGabriel_recon.summedTightIso_',
-        'EcalVetoGabriel_recon.maxCellDep_',
-        'EcalVetoGabriel_recon.showerRMS_',
-        'EcalVetoGabriel_recon.xStd_',
-        'EcalVetoGabriel_recon.yStd_',
-        'EcalVetoGabriel_recon.avgLayerHit_',
-        'EcalVetoGabriel_recon.stdLayerHit_',
-        'EcalVetoGabriel_recon.ecalBackEnergy_',
-        'EcalVetoGabriel_recon.electronContainmentEnergy_',
-        'EcalVetoGabriel_recon.photonContainmentEnergy_',
-        'EcalVetoGabriel_recon.outsideContainmentEnergy_',
-        'EcalVetoGabriel_recon.outsideContainmentNHits_',
-        'EcalVetoGabriel_recon.outsideContainmentXStd_',
-        'EcalVetoGabriel_recon.outsideContainmentYStd_',
-        'EcalVetoGabriel_recon.discValue_',
-        'EcalVetoGabriel_recon.recoilPx_',
-        'EcalVetoGabriel_recon.recoilPy_',
-        'EcalVetoGabriel_recon.recoilPz_',
-        'EcalVetoGabriel_recon.recoilX_',
-        'EcalVetoGabriel_recon.recoilY_',
-        'EcalVetoGabriel_recon.ecalLayerEdepReadout_',
+        'nJets30',
+        'HiggsSVFit_PassBaseline',
+        'HiggsSVFit_PassLepton',
+        'HiggsSVFit_Pt',
+        'HiggsSVFit_Eta',
+        'HiggsSVFit_Phi',
+        'HiggsSVFit_Mass',
+        'HiggsSVFit_TransverseMass',
+        'HiggsSVFit_METRho',
+        'HiggsSVFit_METPhi',
+        'HiggsSVFit_channel',
+        'HiggsSVFit_nPassTight',
+        'HiggsSVFit_nPassMedium',
+        'HiggsSVFit_nPassVLoose',
+        'HiggsSVFit_nPassVVLoose',
+        'HiggsSVFit_PassTight',
+        'HiggsSVFit_PassMedium',
+        'HiggsSVFit_PassVLoose',
+        'HiggsSVFit_PassVVLoose',
+        'HiggsSVFit_Boosted',
+        'HiggsSVFit_VBF',
+        'HiggsSVFit_tau1DM',
+        'HiggsSVFit_tau1Mass',
+        'HiggsSVFit_tau1pdgId',
+        'HiggsSVFit_tau1Pt',
+        'HiggsSVFit_tau1Eta',
+        'HiggsSVFit_tau1Phi',
+        'HiggsSVFit_tau2DM',
+        'HiggsSVFit_tau2Mass',
+        'HiggsSVFit_tau2pdgId',
+        'HiggsSVFit_tau2Pt',
+        'HiggsSVFit_tau2Eta',
+        'HiggsSVFit_tau2Phi',
+        'HiggsSVFit_elecMuonMT',
+        'HiggsSVFit_MaxMT',
+        'HiggsSVFit_tau1_elecMT',
+        'HiggsSVFit_tau1_muMT',
+        'HiggsSVFit_tau1_hadMT',
+        'HiggsSVFit_tau2_muMT',
+        'HiggsSVFit_tau2_hadMT',
+        'HiggsSVFit_ditauMass',
+        'HiggsSVFit_ditauPt',
+        'HiggsSVFit_ditauDR',
+        'HiggsSVFit_deltaREMu',
+        'HiggsSVFit_bj1Pt',
+        'HiggsSVFit_bj1Eta',
+        'HiggsSVFit_bj1Phi',
+        'HiggsSVFit_bj1Mass',
+        'HiggsSVFit_bj1DeepCSV',
+        'HiggsSVFit_bj2Pt',
+        'HiggsSVFit_bj2Eta',
+        'HiggsSVFit_bj2Phi',
+        'HiggsSVFit_bj2Mass',
+        'HiggsSVFit_bj2DeepCSV',
+        'HiggsSVFit_j1Pt',
+        'HiggsSVFit_j1Eta',
+        'HiggsSVFit_j1Phi',
+        'HiggsSVFit_j1Mass',
+        'HiggsSVFit_j1DeepCSV',
+        'HiggsSVFit_j2Pt',
+        'HiggsSVFit_j2Eta',
+        'HiggsSVFit_j2Phi',
+        'HiggsSVFit_j2Mass',
+        'HiggsSVFit_j2DeepCSV',
+        'HiggsSVFit_j3Pt',
+        'HiggsSVFit_j3Eta',
+        'HiggsSVFit_j3Phi',
+        'HiggsSVFit_j3Mass',
+        'HiggsSVFit_j3DeepCSV',
+        'HiggsSVFit_2tau2jetPt',
+        'HiggsSVFit_dijetPt',
+        'HiggsSVFit_dijetMass',
+        'HiggsSVFit_dibjetDR',
+        'HiggsSVFit_MaxbjetTauDR',
+        'HiggsSVFit_MinbjetTauDR',
+        'HiggsSVFit_dijetDR',
+        'HiggsSVFit_dijetDEta',
+        'HiggsSVFit_HT',
+        'HiggsSVFit_DZeta',
 
-        'TargetSPRecoilE_pt',
         ]
 #########################################################
 #########################################################
